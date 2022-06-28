@@ -21,9 +21,10 @@ public class EmployeeService {
         return employeeRepo.findById(id).orElse(null);
     }
 
-    public void create(Employee employee) {
+    public Employee create(Employee employee) {
 
         employeeRepo.save(employee);
+        return employee;
     }
 
     public void update(Employee employee) {

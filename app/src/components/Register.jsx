@@ -1,68 +1,74 @@
 import React from "react";
 import {useState} from "react";
-import axios from "axios";
+import axios from 'axios';
+import {useHistory} from "react-router-dom";
 const Register = () => {
 
-    let [name, setName] = useState("");
-    let [email, setEmail] = useState("")
-    let [password, setPassword] = useState("");
-    let [confirmPassword, setConfirmPassword] = useState("");
+    const history = useHistory();
+    const [business, setBusiness] = useState({
+        id: "",
+        name: "",
+        email: "",
+        password: "",
+        confirm: "",
+    })
 
+    const handleChange = (e) => {
+        const value = e.target.value;
+        setBusiness({...business, [e.target.name]: value})
+    }
     const register = (e) => {
         e.preventDefault();
 
-        let formInfo = {name, email, password, confirmPassword}
-        axios.post("http://localhost:8080/api/businesses", formInfo)
+        axios.post("http://localhost:8080/api/business/register", business)
             .then(res => {
                 console.log(res)
+                history.push("/")
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log(err)
+            })
 
     }
 
-    return(
-        <div className="text-white">
+    return (
+        <div className="w-full min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 text-white">
             <div className="w-full sm:max-w-md p-5 mx-auto">
-                <h2 className="mb-12 text-center text-5xl font-bold">Register your business</h2>
+                <h2 className="mb-12 text-center text-5xl font-bold ">Register your business' account.</h2>
                 <form onSubmit={register}>
                     <div className="mb-4">
                         <label className="block mb-1" >Business Name</label>
-                        <input id="name" type="text" name="name" onChange={(e) => setName(e.target.value)}
-                               className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full text-black"/>
+                        <input id="name" type="text" name="name" onChange={(e) => handleChange(e)}
+                               className="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
                     </div>
                     <div className="mb-4">
-                        <label className="block mb-1" >Email-Address</label>
-                        <input id="email" type="text" name="email" onChange={(e) => setEmail(e.target.value)}
-                               className="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full text-black"/>
+                        <label className="block mb-1" >Email Address</label>
+                        <input id="email" type="text" name="email" onChange={(e) => handleChange(e)}
+                               className="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
                     </div>
                     <div className="mb-4">
                         <label className="block mb-1" >Password</label>
-                        <input id="password" type="password" name="password" onChange={(e) => setPassword(e.target.value)}
-                               className="text-black py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+                        <input id="password" type="password" name="password" onChange={(e) => handleChange(e)}
+                               className="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
                     </div>
                     <div className="mb-4">
                         <label className="block mb-1" >Confirm Password</label>
-                        <input id="confirm" type="password" name="confirm" onChange={(e) => setConfirmPassword(e.target.value)}
-                               className="text-black py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+                        <input id="confirm" type="password" name="confirm" onChange={(e) => handleChange(e)}
+                               className="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
                     </div>
-
                     <div className="mt-6">
                         <input type="submit"
-                            className="w-full inline-flex items-center justify-center px-4 py-2 bg-cyan-800 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-red-700 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 disabled:opacity-25 transition"
+                            className="text-center text-2xl w-full inline-flex items-center justify-center px-4 py-2 bg-cyan-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-cyan-700 active:bg-cyan-700 focus:outline-none focus:border-cyan-700 focus:ring focus:ring-cyan-200 disabled:opacity-25 transition"
                             value="Register"/>
-
-
                     </div>
                     <div className="mt-6 text-center">
-                        <a href="/signin" className="underline">Already have an account? Sign in.</a>
+                        <a href="/login" className="underline">Already have an account? Sign in.</a>
                     </div>
                 </form>
             </div>
         </div>
 
     )
-
-
 }
 
 export default Register;

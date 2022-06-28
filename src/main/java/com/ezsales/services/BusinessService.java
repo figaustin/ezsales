@@ -1,6 +1,7 @@
 package com.ezsales.services;
 
 import com.ezsales.models.Business;
+import com.ezsales.models.Employee;
 import com.ezsales.models.LoginBusiness;
 import com.ezsales.repositories.BusinessRepo;
 import org.mindrot.jbcrypt.BCrypt;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Service
 public class BusinessService {
@@ -59,4 +61,5 @@ public class BusinessService {
             session.removeAttribute("user");
         }
     }
+
 }
