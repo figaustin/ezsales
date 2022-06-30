@@ -32,7 +32,7 @@ const Register = () => {
     }
 
     return (
-        <div className="w-full min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 text-white">
+        <div className="w-full min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 text-black">
             <div className="w-full sm:max-w-md p-5 mx-auto">
                 <h2 className="mb-12 text-center text-5xl font-bold ">Register your business' account.</h2>
                 <form onSubmit={register}>
@@ -58,7 +58,7 @@ const Register = () => {
                     </div>
                     <div className="mt-6">
                         <input type="submit"
-                            className="text-center text-2xl w-full inline-flex items-center justify-center px-4 py-2 bg-cyan-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-cyan-700 active:bg-cyan-700 focus:outline-none focus:border-cyan-700 focus:ring focus:ring-cyan-200 disabled:opacity-25 transition"
+                            className="text-center text-2xl w-full inline-flex items-center justify-center px-4 py-2 bg-slate-700 border border-transparent rounded-md font-semibold capitalize text-black hover:bg-slate-800 active:bg-slate-800 focus:outline-none focus:border-cyan-700 focus:ring focus:ring-cyan-200 disabled:opacity-25 transition"
                             value="Register"/>
                     </div>
                     <div className="mt-6 text-center">

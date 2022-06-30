@@ -36,4 +36,9 @@ public class BusinessController {
         return db_business;
     }
 
+    @GetMapping("/{id}")
+    public Business getCurrent(@PathVariable("id") Long businessId) {
+        return businessService.findById(businessId);
+    }
+
 }

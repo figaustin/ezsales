@@ -1,5 +1,7 @@
 package com.ezsales.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +36,7 @@ public class Business {
     private List<Employee> employees;
 
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
     private List<Product> products;
 
@@ -41,11 +44,11 @@ public class Business {
 
 
 
-    public List<Product> getItems() {
+    public List<Product> getProducts() {
         return products;
     }
 
-    public void setItems(List<Product> products) {
+    public void setProducts(List<Product> products) {
         this.products = products;
     }
 

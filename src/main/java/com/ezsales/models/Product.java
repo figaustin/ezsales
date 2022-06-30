@@ -1,5 +1,7 @@
 package com.ezsales.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -16,26 +18,27 @@ public class Product {
     @Size(min = 2, max = 30, message = "Item name must be between 2 and 30 characters long!")
     private String name;
 
-    @NotEmpty
+
     private Double price;
 
-    @NotEmpty
+
     private Integer amount;
 
-    @NotEmpty
+
     private Boolean taxable;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "company_id")
+    @JoinColumn(name = "business_id")
     private Business business;
 
     public Product() {}
 
-    public Business getCompany() {
+    public Business getBusiness() {
         return business;
     }
 
-    public void setCompany(Business business) {
+    public void setBusiness(Business business) {
         this.business = business;
     }
 
