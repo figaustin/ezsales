@@ -1,5 +1,7 @@
 package com.ezsales.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -25,8 +27,14 @@ public class Employee {
     @Size(min = 6, max = 6, message = "Pin must be 6 numbers!")
     private String pin;
 
+    private Integer wage;
+
+    private Boolean clockedIn;
+
+
     private Boolean isAdmin;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id")
     private Business business;
@@ -71,17 +79,41 @@ public class Employee {
                 '}';
     }
 
+    public Integer getWage() {
+        return wage;
+    }
+
+    public void setWage(Integer wage) {
+        this.wage = wage;
+    }
+
+    public Boolean getClockedIn() {
+        return clockedIn;
+    }
+
+    public void setClockedIn(Boolean clockedIn) {
+        this.clockedIn = clockedIn;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+    public Business getBusiness() {
+        return business;
+    }
+
+    public void setBusiness(Business business) {
+        this.business = business;
+    }
     public void setPin(String pin) {
         this.pin = pin;
     }
 
-    public Business getCompany() {
-        return business;
-    }
-
-    public void setCompany(Business business) {
-        this.business = business;
-    }
 
     public Employee() {}
 

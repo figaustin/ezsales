@@ -7,12 +7,18 @@ import {Combobox, Transition} from "@headlessui/react";
 
 const Sale = () => {
 
+    const [updater, setUpdater] = useState(1);
     const [productsList, setProductsList] = useState([]);
     const [query, setQuery] = useState('');
     const [selected, setSelected] = useState([]);
 
-    const [invoice, setInvoice] = useState([]);
+    const [invoiceProducts, setInvoiceProducts] = useState([]);
     const [total, setTotal] = useState(0);
+    const [invoice, setInvoice] = useState({
+        id: "",
+        total: "",
+        products: ""
+    })
 
     const filtered = query === '' ? productsList : productsList.filter((product) => {
         return product.name.toLowerCase().includes(query.toLowerCase())
@@ -32,23 +38,48 @@ const Sale = () => {
     },[])
 
     useEffect(() => {
-        setInvoice([...invoice, selected])
+        setInvoiceProducts([...invoiceProducts, selected])
     },[selected])
 
     useEffect(() => {
         let sum = 0;
-        for(let i = 1; i < invoice.length; i++) {
-            sum += parseFloat(invoice[i].price);
+        for(let i = 1; i < invoiceProducts.length; i++) {
+            sum += parseFloat(invoiceProducts[i].price);
         }
         setTotal(sum);
-    },[invoice])
+    },[invoiceProducts])
+
+    const receipt = () => {
+        if(invoiceProducts.length < 2) {
+            alert("Please add an item to the order.")
+            return;
+        }
+        axios.post("http://localhost:8080/api/products/receipt", invoiceProducts)
+            .then(res => {console.log(res)})
+            .catch(err => console.log(err))
+
+
+    }
+
+    const remove = (idx) => {
+        let test = []
+
+        for(let i = 0; i < invoiceProducts.length; i++) {
+            if(test[i] != invoiceProducts[idx]) {
+                test.push(invoiceProducts[i])
+            }
+        }
+        setInvoiceProducts(test)
+        setUpdater(() => updater + 1)
+        console.log(updater)
+    }
     return(
         <div className="flex font-serif">
             <Sidebar></Sidebar>
             <div className="flex-column justify-center w-full">
-            <div className="border-slate-600 ml-96">
+            <div className="border-slate-600">
 
-                <div className="top-16 w-72 ml-32">
+                <div className="w-72 mx-auto">
                     <Combobox value={selected} onChange={setSelected}>
                         <div className="relative mt-1">
                             <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
@@ -115,26 +146,28 @@ const Sale = () => {
                     </Combobox>
                 </div>
             </div>
-            <div className="">
-                <table className="overflow-auto border-spacing-5 mx-auto container">
+            <div className="overflow-auto">
+                <table className="overflow-auto border-spacing-5 mx-auto w-full">
                     <thead>
-                    <tr className="bg-slate-400 text-xl">
+                    <tr className="bg-slate-400 text-xl border border-slate-900">
                         <th>Product</th>
-                        <th>Amount</th>
                         <th>Price</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody >
 
                     {
-                        invoice.length > 1 ?
-                        invoice.map((product, idx) => {
+                        invoiceProducts.length > 1 ?
+                        invoiceProducts.map((product, idx) => {
                             return(
                                 idx > 0 ?
                                 <tr className="odd:bg-slate-300 even:bg-slate-400 border border-slate-700 text-lg text-center border text-gray-800">
                                     <td>{product.name}</td>
-                                    <td>{product.amount}</td>
                                     <td>${product.price}</td>
+                                    <td><button onClick={(e) => remove(idx)}><svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                    </svg></button></td>
                                 </tr> : ""
                             )
                         }) : ""
@@ -143,7 +176,7 @@ const Sale = () => {
                 </table>
                 <div className="ml-80 fixed inset-x-0 bottom-0 bg-slate-300 text-4xl font-serif border-t-2 border-slate-500 flex justify-between items-center p-5">
                     <p>Total: ${total}</p>
-                    <button type="button"
+                    <button type="button" onClick={receipt}
                             className="text-2xl text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl hover:text-slate-300 focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg px-10 py-2.5 text-center mr-2 mb-2">
                         Pay
                     </button>

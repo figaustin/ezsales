@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -31,6 +32,15 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id")
     private Business business;
+
+    @JsonBackReference
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "invoices_products",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "invoice_id")
+    )
+    private List<Invoice> invoices;
 
     public Product() {}
 

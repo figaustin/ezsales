@@ -11,6 +11,7 @@ import Inventory from "./components/Inventory";
 import ProductForm from "./components/ProductForm";
 import Sidebar from "./components/Sidebar";
 import React from "react";
+import Employees from "./components/Employees";
 
 function App() {
   return (
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route exact path="/inventory/add">
               <ProductForm></ProductForm>
+          </Route>
+          <Route exact path="/employees">
+              <Employees></Employees>
           </Route>
       </BrowserRouter>
     </div>

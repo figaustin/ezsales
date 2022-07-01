@@ -1,9 +1,11 @@
 import React, {useState} from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
+import {useHistory} from "react-router-dom";
 
 const ProductForm = () => {
 
+    const history = useHistory();
     const [product, setProduct] = useState({
         name: "",
         price: "",
@@ -19,7 +21,10 @@ const ProductForm = () => {
         e.preventDefault();
 
         axios.post(`http://localhost:8080/api/products/add/${localStorage.getItem("id")}`, product)
-            .then(res => console.log(res))
+            .then(res => {
+                console.log(res)
+                history.push("/inventory")
+            })
             .catch(err => console.log(err))
     }
     return(

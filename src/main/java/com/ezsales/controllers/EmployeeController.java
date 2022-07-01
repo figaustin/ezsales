@@ -27,4 +27,18 @@ public class EmployeeController {
         return employeeService.findAll();
     }
 
+    @PostMapping("/clockin/{id}")
+    public void clockIn(@PathVariable("id") Long id)  {
+        Employee employee = employeeService.findById(id);
+        employee.setClockedIn(true);
+    }
+
+    @PostMapping("/clockout/{id}")
+    public void clockOut(@PathVariable("id") Long id)  {
+        Employee employee = employeeService.findById(id);
+        employee.setClockedIn(false);
+    }
+
+
+
 }
