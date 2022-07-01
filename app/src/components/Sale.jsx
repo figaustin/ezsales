@@ -54,11 +54,38 @@ const Sale = () => {
             alert("Please add an item to the order.")
             return;
         }
-        axios.post("http://localhost:8080/api/products/receipt", invoiceProducts)
-            .then(res => {console.log(res)})
+        let invoiceStringArray = []
+
+        for(let i = 1; i < invoiceProducts.length; i++) {
+            invoiceStringArray.push(invoiceProducts[i].name)
+        }
+        console.log(invoiceStringArray)
+        invoiceSend(invoiceStringArray)
+
+
+    }
+
+    const invoiceSend = (invoiceStringArray) => {
+        axios.post("http://localhost:8080/api/invoices/receipt", invoiceStringArray)
+            .then(res => {
+                console.log(res)
+                invoiceGet();
+            })
             .catch(err => console.log(err))
+    }
 
-
+    const invoiceGet = () => {
+        axios.get("http://localhost:8080/api/invoices/download/invoice.pdf")
+            .then(res => {
+                console.log(res)
+                const url = window.URL.createObjectURL(new Blob([res.data]));
+                const link = document.createElement("a");
+                link.href = url;
+                link.setAttribute("download", "invoice.pdf");
+                document.body.appendChild(link);
+                link.click();
+            })
+            .catch(err => console.log(err))
     }
 
     const remove = (idx) => {
