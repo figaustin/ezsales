@@ -34,7 +34,6 @@ public class Employee {
 
     private Boolean isAdmin;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "business_id")
     private Business business;

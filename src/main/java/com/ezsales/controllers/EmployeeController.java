@@ -1,43 +1,34 @@
 package com.ezsales.controllers;
 
+import com.ezsales.models.Business;
 import com.ezsales.models.Employee;
+import com.ezsales.services.BusinessService;
 import com.ezsales.services.EmployeeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@RestController
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/employees")
+@Controller
+@RequestMapping("/employees")
 public class EmployeeController {
 
-    private final EmployeeService employeeService;
+    @Autowired
+    private EmployeeService employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
-
-    @PostMapping("")
-    public Employee createEmployee(@RequestBody Employee employee) {
-        return employeeService.create(employee);
-    }
+    @Autowired
+    private BusinessService businessService;
 
     @GetMapping("")
-    public List<Employee> getAllEmployees() {
-        return employeeService.findAll();
+    public String employees(Model model, HttpSession session) {
+        Business business = (Business) session.getAttribute("business");
+        model.addAttribute("business", businessService.findById(business.getId()));
+        return "employees";
     }
 
-    @PostMapping("/clockin/{id}")
-    public void clockIn(@PathVariable("id") Long id)  {
-        Employee employee = employeeService.findById(id);
-        employee.setClockedIn(true);
-    }
-
-    @PostMapping("/clockout/{id}")
-    public void clockOut(@PathVariable("id") Long id)  {
-        Employee employee = employeeService.findById(id);
-        employee.setClockedIn(false);
-    }
 
 
 

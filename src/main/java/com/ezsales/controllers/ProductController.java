@@ -48,8 +48,26 @@ public class ProductController {
         return "redirect:/inventory";
     }
 
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable("id")Long id, Model model, HttpSession session) {
+        model.addAttribute("product", productService.findById(id));
+        Business business = (Business) session.getAttribute("business");
+        model.addAttribute("business", businessService.findById(business.getId()));
+        return "editProduct";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String update(@Valid @ModelAttribute("product") Product product, BindingResult res) {
+        if(res.hasErrors()) {
+            return "editProduct";
+        }
+        productService.update(product);
+        return "redirect:/inventory";
+    }
+
     @DeleteMapping("/delete/{id}")
-    public void deleteProduct(@PathVariable("id")Long id) {
+    public String deleteProduct(@PathVariable("id")Long id) {
         productService.deleteOne(id);
+        return "redirect:/inventory";
     }
 }

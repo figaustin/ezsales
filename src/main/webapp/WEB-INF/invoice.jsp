@@ -8,9 +8,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>EZSales</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
-
+    <script type="text/javascript" src="js/main.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -51,11 +51,17 @@
     </div>
 </div>
     <div class="flex-column justify-center w-full">
-        <select name="productsList" id="productsList">
-            <c:forEach var="product" items="${business.products}">
-                <option value="${product}">${product.name}</option>
-            </c:forEach>
-        </select>
+        <div class="mx-auto">
+            <form id="myForm">
+                <select name="productsList" id="productsList">
+                    <c:forEach var="product" items="${business.products}">
+                        <option value="${product.id}" name="prod">${product.name}</option>
+                    </c:forEach>
+                </select>
+                <input type="submit" value="Add"/>
+            </form>
+
+        </div>
         <div class="overflow-auto invoice" name="invoice">
             <table class="overflow-auto border-spacing-5 mx-auto w-full invoiceTable">
                 <thead class="invoiceTableHead">
