@@ -33,13 +33,11 @@ public class Business {
     @Size(min=8, max=128, message="Confirm Password must be between 8 and 128 characters")
     private String confirm;
 
-    @JsonManagedReference
     @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
     private List<Employee> employees;
 
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "business", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "business", fetch = FetchType.EAGER)
     private List<Product> products;
 
     public Business() {}

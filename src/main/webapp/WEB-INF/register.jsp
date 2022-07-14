@@ -10,37 +10,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>EZSales</title>
     <script type="text/javascript" src="js/main.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 <body class="bg-dark">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark container-md" style="height: 75px;">
-        <a class="navbar-brand" href="/"><h1 class="logo-font display-5">EZSales</h1></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mx-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><h4>Pricing</h4></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><h4>FAQ</h4></a>
-                </li>
-            </ul>
-            <ul class="navbar-nav mr-auto m-lg-5">
-                <li class="nav-item">
-                    <a class="nav-link" href="/business/register"><h5>Sign Up</h5></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/business/login"><h5>Log in</h5></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+<nav class="bg-cyan-900 font-serif font-bold flex pl-20 pr-20 text-white justify-between items-center lg:border-b lg:border-slate-200/10" style="height: 60px">
+    <a class="text-4xl" href="/"><h1 class="">EZSales</h1></a>
+    <ul class="flex text-xl space-x-10">
+        <li class="">
+            <a class="hover:text-slate-300" href="/"><h4>Pricing</h4></a>
+        </li>
+        <li class="">
+            <a class="hover:text-slate-300" href="/"><h4>FAQ</h4></a>
+        </li>
+    </ul>
+    <ul class="flex text-xl space-x-8">
+        <li class="">
+            <a class="hover:text-slate-300" href="/business/register"><h5>Sign Up</h5></a>
+        </li>
+        <li class="">
+            <a class="hover:text-slate-300" href="/business/login"><h5>Log in</h5></a>
+        </li>
+    </ul>
+</nav>
+<div class="w-full min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 text-black">
+    <div class="w-full sm:max-w-md p-5 mx-auto">
+        <h2 class="mb-12 text-center text-5xl font-bold ">Register your business' account.</h2>
+        <form:form action="/business/register" method="post" modelAttribute="businessRegister">
+            <div class="mb-4">
+                <form:label path="name" class="block mb-1" >Business Name</form:label>
+                <form:input path="name" id="name" type="text" name="name"
+                class="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+            </div>
+            <div class="mb-4">
+                <form:label path="email" class="block mb-1" >Email Address</form:label>
+                <form:input path="email" id="email" type="text" name="email"
+                class="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+            </div>
+            <div class="mb-4">
+                <form:label path="password" class="block mb-1" >Password</form:label>
+                <form:input path="password" id="password" type="password" name="password"
+                class="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+            </div>
+            <div class="mb-4">
+                <form:label path="confirm" class="block mb-1" >Confirm Password</form:label>
+                <form:input path="confirm" id="confirm" type="password" name="confirm"
+                class="text-black py-2 px-3 border border-gray-300 focus:border-cyan-300 focus:outline-none focus:ring focus:ring-cyan-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"/>
+            </div>
+            <div class="mt-6">
+                <input type="submit"
+                       class="text-center text-2xl w-full inline-flex items-center justify-center px-4 py-2 bg-slate-700 border border-transparent rounded-md font-semibold capitalize text-black hover:bg-slate-800 active:bg-slate-800 focus:outline-none focus:border-cyan-700 focus:ring focus:ring-cyan-200 disabled:opacity-25 transition"
+                       value="Register"/>
+            </div>
+            <div class="mt-6 text-center">
+                <a href="/business/login" class="underline">Already have an account? Sign in.</a>
+            </div>
+        </form:form>
+    </div>
+</div>
 </body>
 </html>

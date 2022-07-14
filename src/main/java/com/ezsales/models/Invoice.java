@@ -13,9 +13,7 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer total;
-
-    @JsonManagedReference
+    private Double total;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "invoices_products",
@@ -26,19 +24,11 @@ public class Invoice {
 
     public Invoice() {}
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(Integer total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 
@@ -49,6 +39,20 @@ public class Invoice {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+
 
 
 }

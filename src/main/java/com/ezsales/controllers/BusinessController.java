@@ -3,42 +3,72 @@ package com.ezsales.controllers;
 import com.ezsales.models.Business;
 import com.ezsales.models.LoginBusiness;
 import com.ezsales.services.BusinessService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 
-@RestController
-@CrossOrigin(origins = "http://localhost:3000")
-@RequestMapping("/api/business")
+@Controller
+@RequestMapping("/business")
 public class BusinessController {
 
-    private final BusinessService businessService;
+    @Autowired
+    private BusinessService businessService;
 
-    public BusinessController(BusinessService businessService) {
-        this.businessService = businessService;
-    }
 
-    @PostMapping("/register")
-    public Business register(@RequestBody Business business, BindingResult res) {
-        return businessService.register(business, res);
+    @GetMapping("/login")
+    public String loginSend(Model model) {
+        model.addAttribute("businessLogin", new LoginBusiness());
+        return "login";
     }
 
     @PostMapping("/login")
-    public Business login(@RequestBody LoginBusiness newLogin, BindingResult res, HttpSession session) {
+    public String loginReceive(@Valid @ModelAttribute("businessLogin") LoginBusiness newLogin, BindingResult res, Model model, HttpSession session) {
+        if(res.hasErrors()) {
+            model.addAttribute("businessLogin", new LoginBusiness());
+            return "login";
+        }
+
         Business db_business = businessService.login(newLogin, res);
-        if(!res.hasErrors()) {
-            session.setAttribute("business", db_business);
+        if(db_business == null) {
+            return "login";
         }
         session.setAttribute("business", db_business);
-        System.out.println("DOES THIS WORK???");
-        return db_business;
+
+        return "redirect:/business/dashboard";
     }
 
-    @GetMapping("/{id}")
-    public Business getCurrent(@PathVariable("id") Long businessId) {
-        return businessService.findById(businessId);
+    @GetMapping("/register")
+    public String register(Model model) {
+        model.addAttribute("businessRegister", new Business());
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerSend(@Valid @ModelAttribute("businessRegister") Business newBusiness, BindingResult res, Model model, HttpSession session) {
+        if(res.hasErrors()) {
+            model.addAttribute("businessLogin", new LoginBusiness());
+            return "register";
+        }
+
+        Business db_business = businessService.register(newBusiness, res);
+        if(db_business == null) {
+            model.addAttribute("businessLogin", new LoginBusiness());
+            return "register";
+        }
+        return "redirect:/business/login";
+    }
+
+    @GetMapping("/dashboard")
+    public String dashboard(Model model, HttpSession session) {
+        Business business = (Business) session.getAttribute("business");
+        model.addAttribute("business", businessService.findById(business.getId()));
+        return "dashboard";
     }
 
 }

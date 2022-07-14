@@ -19,21 +19,15 @@ public class Product {
     @Size(min = 2, max = 30, message = "Item name must be between 2 and 30 characters long!")
     private String name;
 
-
     private Double price;
-
 
     private Integer amount;
 
 
-    private Boolean taxable;
-
-    @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "business_id")
     private Business business;
 
-    @JsonBackReference
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "invoices_products",
@@ -42,7 +36,16 @@ public class Product {
     )
     private List<Invoice> invoices;
 
+
     public Product() {}
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
 
     public Business getBusiness() {
         return business;
@@ -91,7 +94,6 @@ public class Product {
                 ", name='" + name + '\'' +
                 ", price=" + price +
                 ", amount=" + amount +
-                ", taxable=" + taxable +
                 ", business=" + business +
                 '}';
     }
