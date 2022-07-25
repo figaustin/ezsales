@@ -3,6 +3,8 @@ package com.ezsales.models;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.util.Objects;
@@ -23,11 +25,13 @@ public class Employee {
     @Size(min = 2, max = 30, message = "Last name must be at least 2 characters long!")
     private String lastName;
 
-    @NotEmpty
-    @Size(min = 6, max = 6, message = "Pin must be 6 numbers!")
-    private String pin;
 
-    private Integer wage;
+    @Max(value = 999999, message = "Pin must be 6 numbers long.")
+    @Min(value = 100000, message = "Pin must be 6 numbers long.")
+    private Integer pin;
+
+    @Min(value = 14, message = "Wage you entered is lower than the minimum wage." )
+    private Double wage;
 
     private Boolean clockedIn;
 
@@ -62,7 +66,7 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public String getPin() {
+    public Integer getPin() {
         return pin;
     }
 
@@ -78,11 +82,11 @@ public class Employee {
                 '}';
     }
 
-    public Integer getWage() {
+    public Double getWage() {
         return wage;
     }
 
-    public void setWage(Integer wage) {
+    public void setWage(Double wage) {
         this.wage = wage;
     }
 
@@ -109,30 +113,10 @@ public class Employee {
     public void setBusiness(Business business) {
         this.business = business;
     }
-    public void setPin(String pin) {
+    public void setPin(Integer pin) {
         this.pin = pin;
     }
-
 
     public Employee() {}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(id, employee.id) && Objects.equals(firstName, employee.firstName) && Objects.equals(lastName, employee.lastName) && Objects.equals(pin, employee.pin) && Objects.equals(isAdmin, employee.isAdmin) && Objects.equals(business, employee.business);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, firstName, lastName, pin, isAdmin, business);
-    }
-
-    public Employee(String firstName, String lastName, String pin, Boolean isAdmin) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.pin = pin;
-        this.isAdmin = isAdmin;
-    }
 }

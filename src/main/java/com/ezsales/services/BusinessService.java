@@ -2,6 +2,7 @@ package com.ezsales.services;
 
 import com.ezsales.models.Business;
 import com.ezsales.models.LoginBusiness;
+import com.ezsales.models.Product;
 import com.ezsales.repositories.BusinessRepo;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @Service

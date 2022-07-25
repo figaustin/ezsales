@@ -50,25 +50,32 @@
 			</a>
 		</div>
 	</div>
-	<div class="border-slate-900 border-1">
-		<table class="overflow-auto border-spacing-5 mx-auto w-full">
-			<thead>
-			<tr class="bg-slate-400 text-xl border border-slate-900">
-				<th>Low Stock</th>
-			</tr>
-			</thead>
-			<tbody class="odd:bg-slate-300 even:bg-slate-400 border border-slate-700 text-lg text-center border text-gray-800">
-			{
-			lowInv.map((product, idx) => {
-			return(
-			<tr>
-				<td>{product.name}</td>
-			</tr>
-			)
-			})
-			}
-			</tbody>
-		</table>
+	<div class="flex-col mx-auto">
+
+		<div class="mx-auto text-3xl font-semibold">
+			<p>${business.name}'s Dashboard</p>
+		</div>
+		<div class="border-slate-900 border-1">
+			<p class="text-center text-xl font-semibold">Products that are low on stock</p>
+			<table class="overflow-auto border-spacing-5 mx-auto w-full">
+				<thead>
+				<tr class="bg-slate-400 text-xl border border-slate-900">
+					<th>Product Name</th>
+					<th>Amount</th>
+				</tr>
+				</thead>
+				<tbody class="odd:bg-slate-300 even:bg-slate-400 border border-slate-700 text-lg text-center border text-gray-800">
+
+				<c:forEach var="product" items="${lowStockList}">
+					<tr class="odd:bg-slate-300 even:bg-slate-400 border border-slate-700 text-lg text-center border text-gray-800">
+						<td>${product.name}</td>
+						<td>${product.amount}</td>
+					</tr>
+				</c:forEach>
+
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 </body>

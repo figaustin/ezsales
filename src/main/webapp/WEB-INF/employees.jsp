@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title></title>
+    <title>EZSales</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -87,9 +87,9 @@
             <tbody >
             <c:forEach var="employee" items="${business.employees}">
                 <tr class="odd:bg-slate-300 even:bg-slate-400 border border-slate-700 text-lg text-center border text-gray-800">
-                    <td>${employee.first_name}</td>
-                    <td>${employee.last_name}</td>
-                    <td>${employee.clocked_in}</td>
+                    <td>${employee.firstName}</td>
+                    <td>${employee.lastName}</td>
+                    <td>$${employee.wage} / hr</td>
                     <td class="flex justify-center gap-4"><a href="/employees/${employee.id}" class="hover:text-black">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
